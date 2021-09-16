@@ -16,3 +16,11 @@ Set the ammount of Memory also while in here. (I did 2 GB)
     - If you want internet access and it is disabled by default go to the "Network" tab and check "Enabled" use the "virtio-net-pci" card for the default internet access.
 
 ## Part 2
+1) No, you can not access any of the files from the VM on the host machine. This is because the VM's are in their own containers. This means, that by defualt, it is not allowed for the host OS to get into the VM's files.
+2) Disk Size:
+    Snapshot: 3.00 MB
+    Template: 3.37 GB
+What each one stores:
+    Snapshot: Stores the state of the VM included the disks, memory, and the settings. These capture the changes between each state (or between each snapshot) so it can be easily reverted back to the previous state without having to create a new VM.
+    Template: This is a copy of the entire VM, which includes the disks, devices, and the settings. This is used for VM cloning and can be givin to others so they have the same VM. This cannot be powered on and edited.
+3) 

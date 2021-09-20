@@ -15,7 +15,9 @@ Set the ammount of Memory also while in here. (I did 2 GB)
     - I also recommend enabling Clipboard Sharing. I use this as I copy things from my main OS to the VM and from my VM to my main OS.
     - If you want internet access and it is disabled by default go to the "Network" tab and check "Enabled" use the "virtio-net-pci" card for the default internet access.
 
-## Part 2
+
+
+## Part 2 - For part 2 I used a Windows Machine with VirtualBox
 1) No, you can not access any of the files from the VM on the host machine. This is because the VM's are in their own containers. This means, that by defualt, it is not allowed for the host OS to get into the VM's files.
 2) Disk Size: <br>
     Snapshot: 3.00 MB<br>
@@ -23,4 +25,34 @@ Set the ammount of Memory also while in here. (I did 2 GB)
 What each one stores:<br>
     Snapshot: Stores the state of the VM included the disks, memory, and the settings. These capture the changes between each state (or between each snapshot) so it can be easily reverted back to the previous state without having to create a new VM.<br>
     Template: This is a copy of the entire VM, which includes the disks, devices, and the settings. This is used for VM cloning and can be givin to others so they have the same VM. This cannot be powered on and edited.
-3) 
+3) The network layout is NAT.
+- it obtanied a private IP from my DHCP server and the VMM then mapped it to a TCP port on my machince
+- This means that it is using my host machine's IP to access the external network/outside world
+- This also means we can access the VM from the external network through port forwarding
+
+## Part 3 - For part 3 I used a Windows Machine with VirtualBox
+1) I am going to use a Bridged Network. To do this:
+- Went to settings of VM and went to Network
+- Adapter 2 > Enabled > Attacted To: Bridged Adapter > OK
+- This will allow us to connect to the VM from other PCs (other as in within the local network and not on the VM)
+- Then start the VM and go to the terminal and type "ip a"
+- We can now see that it has its own IP address on the network (for me my home network)
+- To verify this is working, we can install aoache2
+- To install > use the command: sudo apt install apache2
+- I went on a different device and typed in the ip of 192.168.1.117
+- We get a page saying that "It works!"
+
+## Bonus Info: Getting Bitlocker to Work in Ubuntu
+1) Open a terminal
+2) Install dislocker:<br>
+sudo apt install dislocker
+3) Make a directory for decrypting and mounting the drive<br>
+sudo mkdir -p /media/bitlocker
+sudo mkdir -p /media/bitlockermount
+4)Find your disk that you are decrypting and take note of the device<br>
+sudo fdisk -l
+5) Decrypt the drive where "partition" will be the device name and "password" is the password of the drive<br>
+sudo dislocker "partition" -u"password" -- /media/bitlocker
+6) Mount the drive so you can easily access it's files<br>
+sudo mount -o loop /media/bitlocker/dislocker-file /media/bitlockermount
+7) Now you should be able to access the encrypted drive like a normal external USB

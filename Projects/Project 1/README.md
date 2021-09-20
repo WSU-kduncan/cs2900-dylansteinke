@@ -48,8 +48,8 @@ What each one stores:<br>
 sudo apt install dislocker
 3) Make a directory for decrypting and mounting the drive<br>
 sudo mkdir -p /media/bitlocker<br>
-sudo mkdir -p /media/bitlockermount<br>
-4)Find your disk that you are decrypting and take note of the device<br>
+sudo mkdir -p /media/bitlockermount
+4) Find your disk that you are decrypting and take note of the device<br>
 sudo fdisk -l
 5) Decrypt the drive where "partition" will be the device name and "password" is the password of the drive<br>
 sudo dislocker "partition" -u"password" -- /media/bitlocker

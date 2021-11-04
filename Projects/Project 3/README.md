@@ -1,5 +1,5 @@
-## Investigate available mounts
-Docker:  
+# Investigate available mounts
+## Docker:  
 Docker has three mount types: volumes, bind mounts, and tmpfs mounts.  
 Volumes:  
 This is a mount where the container manages it and it can also be shared with other containers.  
@@ -11,7 +11,7 @@ docker run -d \
 --mount source=NAME,target=/app \
 nginx:latest
 ```  
-Then we inspect using: docker inspect container_name  
+Then we inspect using: ```docker inspect container_name```  
 Source Used: [docs.docker](https://docs.docker.com/storage/volumes/)  
 Bind mounts:  
 This is where the host machines file systems are mounted to the container but the container doesn't control it, the host does.  
@@ -23,12 +23,12 @@ docker run -d \
 --mount type=bind,source=/file/path/folder,target=/container/folder \
 busybox
 ```  
-Then we inspect using: docker inspect container_name  
+Then we inspect using: ```docker inspect container_name```  
 tmpfs mounts:  
 This is a mount where as soon as a ontainer is stopped, the data that was in the mount will be lost with the container.  
 
-Singularity:  
-Singularity has two mount types: fuse and image mounts.
+## Singularity:  
+Singularity has two mount types: fuse and image mounts.  
 Fuse:  
 This allows filesystems to run in a userspace after being mounted.  
 To use this we use the command: 
@@ -38,8 +38,9 @@ This allows you to mount an image file to a container. We can use this to take m
 To use this we use the command: ```-B <image-file>:<dest>:image-src=<source>```  
 Source Used: [Sylabs](https://sylabs.io/guides/3.7/user-guide/bind_paths_and_mounts.html)
 
-## Investigate building images for the container engine
-Docker:  
+
+# Investigate building images for the container engine
+## Docker:  
 Yes, there are build tools available.  
 The command to build an image is: ```docker build (options wanted) PATH/URL```  
 For example if we want to build an image from gitub: ```docker build https://github.com/image/to/build/path.git#container:docker```  
@@ -52,7 +53,8 @@ COPY: This is used to copy files to the working directory from the source to the
 RUN: This is used to run a command such as installing something, updating the system, or running the package  
 Extra... EXPOSE: this is used to "expose" a port. This is used to document what ports are being used.  
 ```
-Singularity:  
+
+## Singularity:  
 Yes, there are build tools available.  
 The command to build an image is: ```sudo singularity build FILE docker:LOCATION```  
 For example if we want to use one called lolcow.sif: ```sudo singularity build lolcow.sif docker://godlovedc/lolcow```  
